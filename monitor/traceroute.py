@@ -6,16 +6,15 @@ import sys
 from subprocess import Popen, PIPE
 
 def isNum(value):
-  try:
-    float(value)
-    return True
-  except ValueError:
     try:
-	int(value)
-	return True
+        float(value)
+        return True
     except ValueError:
-	return False
-    return False
+        try:
+            int(value)
+            return True
+        except ValueError:
+            return False
 
 def findAddr(tr_data):
     item_ind = 0
