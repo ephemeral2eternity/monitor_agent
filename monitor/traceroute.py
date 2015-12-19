@@ -5,6 +5,18 @@ import re
 import sys
 from subprocess import Popen, PIPE
 
+def isNum(value):
+  try:
+    float(value)
+    return True
+  except ValueError:
+    try:
+	int(value)
+	return True
+    except ValueError:
+	return False
+    return False
+
 def findAddr(tr_data):
     item_ind = 0
     for item in tr_data:
@@ -19,7 +31,7 @@ def traceroute(host):
     if sys.platform == 'win32':
         cmd = ['tracert', host]
     else:
-        cmd = ['traceroute', '-I', host]
+        cmd = ['traceroute', '-I', '-m', '30', host]
     p = Popen(cmd, stdout=PIPE)
     while True:
         line = p.stdout.readline()
@@ -50,7 +62,7 @@ def traceroute(host):
             total_hop_time = 0
             probe_times = 0
             for tr_item in tr_data:
-                if tr_item.isdigit():
+                if isNum(tr_item):
                     total_hop_time += float(tr_item)
                     probe_times += 1
                     hop_time_exist = True
@@ -77,5 +89,5 @@ def trVMs(vmList):
     return srvHops
 
 if __name__ == "__main__":
-    hops = traceroute('216.239.47.121')
+    hops = traceroute('104.196.17.157')
     print hops
