@@ -27,7 +27,6 @@ cur_ts = time.time()
 ping_file_name = 'ping@' + agent_name + '@' + str(int(cur_ts))
 srvPINGs = pingVMs(srvs)
 selectedSrv = srvs[min(srvPINGs, key=lambda k: srvPINGs[k])]['ip']
-selected_srv_addr = selectedSrv + '/videos/'
 writeJson(ping_file_name, srvPINGs)
 
 cur_ts = time.time()

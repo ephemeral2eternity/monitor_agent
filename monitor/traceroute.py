@@ -5,6 +5,15 @@ import re
 import sys
 from subprocess import Popen, PIPE
 
+def findAddr(tr_data):
+    item_ind = 0
+    for item in tr_data:
+        if len(item.split('.')) > 3:
+            return item_ind, item
+        item_ind += 1
+
+    return -1, '*'
+
 def traceroute(host):
     hops = dict()
     if sys.platform == 'win32':
@@ -30,14 +39,11 @@ def traceroute(host):
         if tr_data[0].isdigit():
             hop_id = int(tr_data[0])
             hop = {}
+            addr_ind, addr = findAddr(tr_data)
 
-            if sys.platform == 'win32':
-                hop['Addr'] = tr_data[-1]
-                tr_data.pop()
-                tr_data.pop(0)
-            else:
-                hop['Addr'] = tr_data[1]
-                tr_data.pop(1)
+            hop['Addr'] = addr
+            if addr_ind > 0:
+                tr_data.pop(addr_ind)
                 tr_data.pop(0)
 
             hop_time_exist = False
