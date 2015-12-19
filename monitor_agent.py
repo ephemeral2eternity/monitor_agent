@@ -34,4 +34,4 @@ cur_ts = time.time()
 ## Traceroute all srvs
 tr_file_name = 'tr@' + agent_name + '@' + str(int(cur_ts))
 srvHops = trVMs(srvs)
-writeJson(ping_file_name, srvPINGs)
+writeJson(tr_file_name, srvHops)

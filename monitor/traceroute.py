@@ -24,8 +24,6 @@ def traceroute(host):
             tr_line = re.sub(r'\(.*?\)', '', tr_line)
         tr_data = tr_line.split()
 
-        print tr_data
-
         if len(tr_data) < 1:
             continue
 
@@ -59,7 +57,7 @@ def traceroute(host):
                 hop['Time'] = total_hop_time / float(probe_times)
             else:
                 hop['Time'] = 5000
-            # print hop
+            print hop
             hops[hop_id] = hop
 
     return hops
