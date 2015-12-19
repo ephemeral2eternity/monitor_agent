@@ -19,7 +19,7 @@ def traceroute(host):
     if sys.platform == 'win32':
         cmd = ['tracert', host]
     else:
-        cmd = ['traceroute', host]
+        cmd = ['traceroute', '-I', host]
     p = Popen(cmd, stdout=PIPE)
     while True:
         line = p.stdout.readline()
@@ -44,7 +44,7 @@ def traceroute(host):
             hop['Addr'] = addr
             if addr_ind > 0:
                 tr_data.pop(addr_ind)
-                tr_data.pop(0)
+            tr_data.pop(0)
 
             hop_time_exist = False
             total_hop_time = 0
@@ -62,7 +62,7 @@ def traceroute(host):
             if hop_time_exist:
                 hop['Time'] = total_hop_time / float(probe_times)
             else:
-                hop['Time'] = 5000
+                hop['Time'] = '*'
             print hop
             hops[hop_id] = hop
 
@@ -77,5 +77,5 @@ def trVMs(vmList):
     return srvHops
 
 if __name__ == "__main__":
-    hops = traceroute('130.211.180.109')
+    hops = traceroute('216.239.47.121')
     print hops
