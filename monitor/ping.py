@@ -13,8 +13,13 @@ def extractPingInfo(pingStr):
     curDataList = pingStr.split()
     pingData = {}
     for curData in curDataList:
+        # print curData
         if '=' in curData:
             dataStr = curData.split('=')
+            dataVal = extract_number(dataStr[1])
+            pingData[dataStr[0]] = float(dataVal[0])
+        elif '<' in curData:
+            dataStr = curData.split('<')
             dataVal = extract_number(dataStr[1])
             pingData[dataStr[0]] = float(dataVal[0])
     return pingData
@@ -48,10 +53,10 @@ def parsePingRst(pingString, count):
     for line in lines:
         curline = line
         # print curline
-        if "time=" in curline:
+        if ("time=" in curline) or ("time<" in curline):
             curDataStr = curline.split(':', 2)[1]
             curDataDict = extractPingInfo(curDataStr)
-            print curDataDict
+            # print "curDataDict:", curDataDict
             rtts.append(curDataDict['time'])
     return rtts
 
@@ -59,10 +64,10 @@ def pingVMs(vmList):
     srvRTTs = {}
     srvNames = vmList.keys()
     for srv in srvNames:
-        mnRTT = getMnRTT(vmList[srv]['ip'], 5)
+        mnRTT = getMnRTT(vmList[srv], 5)
         srvRTTs[srv] = mnRTT
     return srvRTTs
 
 if __name__ == "__main__":
-    mnRTT = getMnRTT('130.211.180.109')
+    mnRTT = getMnRTT('rs-cdn.cmu-agens.com')
     print mnRTT

@@ -13,7 +13,8 @@ def load_vms():
 
             vm_ip = row[1]
             vm_zone = row[2]
-            vm_list[vm_name] = {'ip' : vm_ip, 'zone' : vm_zone}
+            ## vm_list[vm_name] = {'ip' : vm_ip, 'zone' : vm_zone}
+            vm_list[vm_name] = vm_ip
 
     return vm_list
 

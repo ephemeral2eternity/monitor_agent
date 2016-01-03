@@ -83,7 +83,7 @@ def trVMs(vmList):
     srvHops = {}
     srvNames = vmList.keys()
     for srv in srvNames:
-        hops = traceroute(vmList[srv]['ip'])
+        hops = traceroute(vmList[srv])
         srvHops[srv] = hops
     return srvHops
 
