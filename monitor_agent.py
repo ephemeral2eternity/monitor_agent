@@ -1,4 +1,4 @@
-## Testing the CDN client in a VoD System
+## Monitor a CDN host by traceroute and ping
 # test_cdn_client.py
 # Chen Wang, Oct. 23, 2015
 # chenw@cmu.edu
