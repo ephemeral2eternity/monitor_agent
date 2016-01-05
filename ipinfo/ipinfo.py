@@ -40,7 +40,7 @@ def save_ipinfo(outPath, hop_info):
     out_file = outPath + cur_ip + '.json'
     if not os.path.exists(out_file):
         with open(out_file, 'w') as outfile:
-            json.dump(hop_info, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
+            json.dump(hop_info, outfile, sort_keys = True, indent = 4, ensure_ascii=True)
 
 
 if __name__ == "__main__":

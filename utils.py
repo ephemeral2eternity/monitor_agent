@@ -25,4 +25,4 @@ def writeJson(json_file_name, json_var):
 	if json_var:
 		trFileName = trFolder + json_file_name + ".json"
 		with open(trFileName, 'w') as outfile:
-			json.dump(json_var, outfile, sort_keys = True, indent = 4, ensure_ascii=False)
+			json.dump(json_var, outfile, sort_keys = True, indent = 4, ensure_ascii=True)
