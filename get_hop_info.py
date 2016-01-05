@@ -11,7 +11,9 @@ from ipinfo.ipinfo import *
 agent_name = getMyName()
 
 ## Denote the server info
-cdn_host = "cmu-agens.azureedge.net"
+# cdn_host = "cmu-agens.azureedge.net"
+cdn_host = "40.122.125.188"
+# cdn_host = "aws.cmu-agens.com"
 hop_data_folder = os.getcwd() + '/hopData/'
 
 hops = traceroute(cdn_host)
@@ -19,13 +21,11 @@ print hops
 
 hop_ids = sorted(hops.keys(), key=int)
 for hop_id in hop_ids:
-    cur_hop = hops[hop_id]['Addr']
-    if is_hostname(cur_hop):
-        cur_hop_ip = host2ip(cur_hop)
-    else:
-        cur_hop_ip = cur_hop
+    cur_hop_ip = hops[hop_id]['IP']
+    if cur_hop_ip is '*':
+        continue
 
-    hop_info = ipinfo(cur_hop_ip)
-    save_ipinfo(hop_data_folder, hop_info)
-    print hop_info
-
+    if not is_reserved(cur_hop_ip):
+        hop_info = ipinfo(cur_hop_ip)
+        save_ipinfo(hop_data_folder, hop_info)
+        print hop_info

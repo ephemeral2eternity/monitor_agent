@@ -16,6 +16,13 @@ def isNum(value):
         except ValueError:
             return False
 
+def is_ip(ip_addr):
+    re_ip = re.compile('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$')
+    if re_ip.match(ip_addr):
+        return True
+    else:
+        return False
+
 def findAddr(tr_data):
     item_ind = 0
     for item in tr_data:
@@ -39,8 +46,10 @@ def traceroute(host):
 
         tr_line = line.replace('ms', '')
         if sys.platform == 'win32':
+            ip_addrs = re.findall(r'\[.*?\]', tr_line)
             tr_line = re.sub(r'\[.*?\]', '', tr_line)
         else:
+            ip_addrs = re.findall(r'\(.*?\)', tr_line)
             tr_line = re.sub(r'\(.*?\)', '', tr_line)
         tr_data = tr_line.split()
 
@@ -74,6 +83,12 @@ def traceroute(host):
                 hop['Time'] = total_hop_time / float(probe_times)
             else:
                 hop['Time'] = '*'
+            if len(ip_addrs) > 0:
+                hop['IP'] = ip_addrs[0][1:-1]
+            elif is_ip(hop['Addr']):
+                hop['IP'] = hop['Addr']
+            else:
+                hop['IP'] = '*'
             print hop
             hops[hop_id] = hop
 
@@ -88,5 +103,5 @@ def trVMs(vmList):
     return srvHops
 
 if __name__ == "__main__":
-    hops = traceroute('104.196.17.157')
+    hops = traceroute('40.122.125.188')
     print hops
