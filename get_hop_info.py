@@ -11,8 +11,8 @@ from ipinfo.ipinfo import *
 agent_name = getMyName()
 
 ## Denote the server info
-# cdn_host = "cmu-agens.azureedge.net"
-cdn_host = "40.122.125.188"
+cdn_host = "cmu-agens.azureedge.net"
+# cdn_host = "40.122.125.188"
 # cdn_host = "aws.cmu-agens.com"
 hop_data_folder = os.getcwd() + '/hopData/'
 
